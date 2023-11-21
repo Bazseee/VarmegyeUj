@@ -29,3 +29,6 @@ Route::put('/counties/{county}', [CountyController::class, 'update'])->name('cou
 Route::delete('/counties/{county}', [CountyController::class, 'destroy'])->name('counties.destroy');
 Route::get('/counties/filter', [CountyController::class, 'filter'])->name('counties.filter');
 
+use App\Http\Controllers\CityController;
+
+Route::get('/cities/filter', [CityController::class, 'filterByCounty'])->name('cities.filter');
