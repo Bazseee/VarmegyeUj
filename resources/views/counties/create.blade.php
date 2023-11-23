@@ -1,5 +1,5 @@
 <!-- resources/views/counties/create.blade.php -->
-
+<a href="{{ url('/') }}" title="Kezdőlap"><i class="fa fa-home"></i></a>
 <h1>Vármegye hozzáadás</h1>
 
 <form action="{{ route('counties.store') }}" method="POST">

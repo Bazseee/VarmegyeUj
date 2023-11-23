@@ -1,3 +1,4 @@
+<a href="{{ url('/') }}" title="Kezdőlap"><i class="fa fa-home"></i></a>
 <h1>Városok</h1>
 
 <label for="county">Szűrés megye szerint:</label>

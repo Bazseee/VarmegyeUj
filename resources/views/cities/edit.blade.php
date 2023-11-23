@@ -1,3 +1,4 @@
+<a href="{{ url('/') }}" title="Kezdőlap"><i class="fa fa-home"></i></a>
 <h1>Város szerkesztése</h1>
 
 <form action="{{ route('cities.update', $city) }}" method="POST">
