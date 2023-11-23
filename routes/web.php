@@ -32,3 +32,10 @@ Route::get('/counties/filter', [CountyController::class, 'filter'])->name('count
 use App\Http\Controllers\CityController;
 
 Route::get('/cities/filter', [CityController::class, 'filterByCounty'])->name('cities.filter');
+Route::get('/cities', [CityController::class, 'index'])->name('cities.index');
+Route::get('/cities/create', [CityController::class, 'create'])->name('cities.create');
+Route::post('/cities', [CityController::class, 'store'])->name('cities.store');
+Route::get('/cities/{city}/edit', [CityController::class, 'edit'])->name('cities.edit');
+Route::put('/cities/{city}', [CityController::class, 'update'])->name('cities.update');
+Route::delete('/counties/{city}', [CityController::class, 'destroy'])->name('cities.destroy');
+
