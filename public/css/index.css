@@ -1,0 +1,38 @@
+body{
+    width: 80%;
+    margin: auto;
+    background-color: purple;
+}
+
+h1{
+    text-align: center;
+    font-size: 5rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: white;
+}
+
+.container{
+    margin-right: auto;
+    margin-left: auto;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 30%;
+    background-color: white;
+}
+
+.container a{
+    text-decoration: none;
+    color: white;
+    background-color: green;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+button{
+    background-color: red;
+    border: 1px solid black;
+    border-radius: 5px;
+}
