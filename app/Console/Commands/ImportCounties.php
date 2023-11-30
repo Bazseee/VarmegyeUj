@@ -5,20 +5,18 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Exception;
 
 class ImportCounties extends Command
 {
-    protected $signature = 'app.import-counties {filename} {--database=}';
-
+    protected $signature = 'app:import-counties {fileName} {database?}';
 
     public function handle()
     {
         $fileName = $this->argument('fileName');
         $csvData = $this->getCSVData($fileName);
-        var_dump($csvData);
-        return 0;
- 
-        $schemaName = $this->argument('name') ?: config("database.connections.mysql.database");
+
+        /*$schemaName = $this->argument('database') ?: config("database.connections.mysql.database");
         $charset = config("database.connections.mysql.charset",'utf8mb4');
         $collation = config("database.connections.mysql.collation",'utf8mb4_unicode_ci');
  
@@ -34,7 +32,7 @@ class ImportCounties extends Command
             $e->getMessage();
         }
  
-        config(["database.connections.mysql.database" => $schemaName]);
+        config(["database.connections.mysql.database" => $schemaName]);*/
     }
     private function getCSVData($fileName, $withHeader = true){
         if (!file_exists($fileName)) {
@@ -61,7 +59,7 @@ class ImportCounties extends Command
     private function truncate($table)
     {
         try {
-            DB::statement("TRUNCATE TABEL $table;");
+            DB::statement("TRUNCATE TABLE $table;");
             $this->info("$table table has been truncated.");
         }
         catch (Exception $e) {
