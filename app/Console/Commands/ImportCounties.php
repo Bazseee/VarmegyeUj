@@ -13,24 +13,59 @@ class ImportCounties extends Command
 
     public function handle()
     {
-        $filename = $this->argument('filename');
-        $databaseName = $this->option('database') ?? config('database.default');
-
-        if (!Schema::connection($databaseName)->hasTable('counties')) {
-            $this->error("A 'counties' tábla nem létezik az adatbázisodban.");
-            return;
+        $fileName = $this->argument('fileName');
+        $csvData = $this->getCSVData($fileName);
+        var_dump($csvData);
+        return 0;
+ 
+        $schemaName = $this->argument('name') ?: config("database.connections.mysql.database");
+        $charset = config("database.connections.mysql.charset",'utf8mb4');
+        $collation = config("database.connections.mysql.collation",'utf8mb4_unicode_ci');
+ 
+        config(["database.connections.mysql.database" => null]);
+ 
+        $query = "CREATE DATABASE IF NOT EXISTS $schemaName CHARACTER SET $charset COLLATE $collation;";
+ 
+        try {
+            DB::statement($query);
+            echo "$schemaName database has been created.";
         }
-
-        $csvData = array_map('str_getcsv', file($filename));
-
-        array_shift($csvData);
-
-        foreach ($csvData as $row) {
-            DB::connection($databaseName)->table('counties')->insert([
-                'name' => $row[0],
-            ]);
+        catch (Exception $e) {
+            $e->getMessage();
         }
-
-        $this->info('Vármegyék beimportálva.');
+ 
+        config(["database.connections.mysql.database" => $schemaName]);
+    }
+    private function getCSVData($fileName, $withHeader = true){
+        if (!file_exists($fileName)) {
+            echo "$fileName nem találhetó";
+            return false;
+        }
+        $csvFile = fopen($fileName,'r');
+        $header = fgetcsv($csvFile);
+        if ($withHeader){
+            $lines[] = $header;
+        }
+        else{
+            $lines[] = $header;
+        }
+        while (! feof($csvFile)) {
+            $line = fgets($csvFile);
+            $lines[] = $line;
+        }
+        fclose($csvFile);
+ 
+        return $lines;
+    }
+ 
+    private function truncate($table)
+    {
+        try {
+            DB::statement("TRUNCATE TABEL $table;");
+            $this->info("$table table has been truncated.");
+        }
+        catch (Exception $e) {
+            $this->error($e->getMessage());
+        }
     }
 }
